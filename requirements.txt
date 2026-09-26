@@ -1,0 +1,38 @@
+# Runtime dependencies for the business entity resolution pipeline.
+#
+# Floors below are the versions this project was developed and tested against
+# (Python 3.10.11). They are deliberately not newer-feature-gated: the code uses
+# no APIs newer than these, so older patch releases of the same minor line
+# should work, but that wider range is not exercised by CI here.
+#
+# Install with:  pip install -r requirements.txt
+
+# --- Core scientific stack -------------------------------------------------
+numpy>=2.2.6
+pandas>=2.3.3
+scipy>=1.15.3
+
+# --- Modelling -------------------------------------------------------------
+# scikit-learn supplies the three candidate classifiers (LogisticRegression,
+# RandomForestClassifier, HistGradientBoostingClassifier), the KFold splitter,
+# the TF-IDF vectorizers used by blocking, and NearestNeighbors.
+scikit-learn>=1.7.2
+
+# --- Fuzzy string matching -------------------------------------------------
+# Levenshtein, Jaro-Winkler, and the token-set/partial-ratio scorers behind the
+# name and address features.
+rapidfuzz>=3.14.5
+
+# --- Model persistence -----------------------------------------------------
+# Serialises the trained bundle to models/model.joblib.
+joblib>=1.5.3
+
+# --- Configuration (optional) ----------------------------------------------
+# Enables `--config file.yaml`. src/config.py imports this inside a
+# try/except ImportError and falls back to JSON when it is absent, so the
+# pipeline runs without it. Remove this line to depend on JSON config only.
+PyYAML>=6.0.3
+
+# --- Tests -----------------------------------------------------------------
+# Only used by tests/. The metrics suite has no other test-time dependency.
+pytest>=9.1.1

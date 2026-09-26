@@ -102,14 +102,17 @@ a malformed file behind.
 
 ## Install
 
-Python 3.10+.
+Python 3.10 or newer.
 
 ```bash
-pip install numpy pandas scipy scikit-learn rapidfuzz joblib pyyaml pytest
+pip install -r requirements.txt
 ```
 
-`pyyaml` is optional — it enables `--config file.yaml`; without it, JSON config
-files are used.
+That pulls in numpy, pandas, scipy, scikit-learn, rapidfuzz, and joblib, plus
+PyYAML for `--config file.yaml` and pytest for the test suite. PyYAML is the only
+soft dependency — `src/config.py` imports it inside a `try/except ImportError` and
+falls back to JSON config files when it is missing, so the pipeline runs without
+it.
 
 ## Usage
 
@@ -327,6 +330,7 @@ python -m tests.make_fixture --out dataset --train-s1 300 --train-pool 500 \
 
 ```
 scripts/          CLI entry points: train, infer, explore_dataset, check_blocking
+requirements.txt  pinned dependency floors
 src/
   config.py       all configuration dataclasses, YAML/JSON loading, dotted overrides
   data/           loading, schema validation, ground-truth parsing
