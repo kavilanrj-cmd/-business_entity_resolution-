@@ -34,14 +34,23 @@ SOURCE1 = "source1"
 SOURCE2 = "source2"
 SOURCE3 = "source3"
 
+#: Repository root = two levels above this file (``src/config.py``).
+#:
+#: The real Amazon ML Challenge data lives under
+#: ``dataset/student_resource/dataset``; ``dataset/`` itself only holds the
+#: synthetic fixture from ``tests/make_fixture.py``.  The loader auto-detects
+#: the real root -- see :func:`src.data.loader.resolve_dataset_root` -- and these
+#: defaults follow it so the CLI entry points cannot silently use the fixture.
+DEFAULT_DATASET_ROOT: Path = PROJECT_ROOT / "dataset" / "student_resource" / "dataset"
+
 
 @dataclass
 class PathConfig:
     """Filesystem locations.  All paths are relative to ``base_dir``."""
 
     base_dir: str = "."
-    train_dir: str = "dataset/train"
-    test_dir: str = "dataset/test"
+    train_dir: str = str(DEFAULT_DATASET_ROOT / "train")
+    test_dir: str = str(DEFAULT_DATASET_ROOT / "test")
     models_dir: str = "models"
     output_dir: str = "output"
     reports_dir: str = "reports"

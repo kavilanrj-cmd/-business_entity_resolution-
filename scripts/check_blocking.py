@@ -16,6 +16,7 @@ import pandas as pd
 from src.blocking import CandidateGenerator, build_pool, strategies_from_mask
 from src.config import BlockingConfig, FeatureConfig, setup_logging
 from src.data import load_ground_truth, load_split
+from src.data.loader import default_train_dir
 from src.features import FeatureBuilder, label_from_ground_truth
 from src.preprocessing import preprocess_table
 
@@ -25,7 +26,7 @@ RULE = "=" * 96
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--train-dir", default="dataset/train")
+    ap.add_argument("--train-dir", default=default_train_dir(), help="training data directory (auto-detected)")
     ap.add_argument("--limit", type=int, default=None, help="limit Source 1 rows for a quick check")
     ap.add_argument("--skip-features", action="store_true")
     args = ap.parse_args()

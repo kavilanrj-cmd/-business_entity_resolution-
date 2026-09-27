@@ -22,7 +22,7 @@ import pandas as pd
 
 from src.config import ADDRESS_COLUMN, COUNTRY_COLUMN, ID_COLUMN, NAME_COLUMN, setup_logging
 from src.data import load_ground_truth, load_split
-from src.data.loader import describe_dataframe
+from src.data.loader import default_test_dir, default_train_dir, describe_dataframe
 from src.data.validator import log_warnings, validate_dataset
 from src.preprocessing import normalize_address, normalize_country, normalize_name
 
@@ -150,8 +150,8 @@ def _duplicate_report(tables: dict[str, pd.DataFrame]) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Explore the entity-resolution dataset.")
-    ap.add_argument("--train-dir", default="dataset/train")
-    ap.add_argument("--test-dir", default="dataset/test")
+    ap.add_argument("--train-dir", default=default_train_dir(), help="training data directory (auto-detected)")
+    ap.add_argument("--test-dir", default=default_test_dir(), help="test data directory (auto-detected)")
     ap.add_argument("--json-out", default=None, help="optional path for a machine-readable summary")
     ap.add_argument("--log-level", default="INFO")
     args = ap.parse_args()
